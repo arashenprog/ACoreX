@@ -16,10 +16,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\AssemblyLoader\ACoreX.AssemblyLoader\ACoreX.AssemblyLoader.csproj" />
-    <ProjectReference Include="..\..\Authentication\ACoreX.Authentication.Abstraction\ACoreX.Authentication.Abstractions.csproj" />
+    <ProjectReference Include="..\..\Authentication\ACoreX.Authentication.Abstractions\ACoreX.Authentication.Abstractions.csproj" />
     <ProjectReference Include="..\..\Authentication\ACoreX.Authentication.Core\ACoreX.Authentication.Core.csproj" />
     <ProjectReference Include="..\..\Authentication\ACoreX.Authentication.JWT\ACoreX.Authentication.JWT.csproj" />
-    <ProjectReference Include="..\..\BaseLogger\ACoreX.Logger.Base.csproj" />
     <ProjectReference Include="..\..\Data\ACoreX.Data.Core\ACoreX.Data.Core.csproj" />
     <ProjectReference Include="..\..\Data\ACoreX.Data.Dapper\ACoreX.Data.Dapper.csproj" />
     <ProjectReference Include="..\..\Injector\ACoreX.Injector.Abstraction\ACoreX.Injector.Abstractions.csproj" />

@@ -13,7 +13,7 @@ namespace ACoreX.Data.Dapper
         {
             get
             {
-                return new SqlConnection("Server=192.168.105.55\\exp17;Database=AcoreXTest; User Id = ma; Password = 123;");
+                return new SqlConnection("Server=192.168.105.55\\exp17;Database=CRM; User Id = ma; Password = 123;");
             }
         }
 

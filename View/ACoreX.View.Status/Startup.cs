@@ -1,12 +1,11 @@
-﻿using ACoreX.Authentication.Abstractions;
+﻿using ACoreX.AssemblyLoader;
+using ACoreX.Authentication.Abstractions;
 using ACoreX.Authentication.Core;
 using ACoreX.Authentication.JWT;
 using ACoreX.Data.Abstractions;
 using ACoreX.Data.Dapper;
 using ACoreX.Injector.Abstractions;
 using ACoreX.Injector.Core;
-using ACoreX.AssemblyLoader;
-using ACoreX.Logger.Base;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;

@@ -1,4 +1,5 @@
-﻿using ACoreX.Authentication.Abstractions;
+﻿
+using ACoreX.Authentication.Abstractions;
 using ACoreX.Injector.Abstractions;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;

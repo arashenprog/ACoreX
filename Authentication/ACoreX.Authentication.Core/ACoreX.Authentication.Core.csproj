@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Injector\ACoreX.Injector.Abstraction\ACoreX.Injector.Abstractions.csproj" />
-    <ProjectReference Include="..\ACoreX.Authentication.Abstraction\ACoreX.Authentication.Abstractions.csproj" />
+    <ProjectReference Include="..\ACoreX.Authentication.Abstractions\ACoreX.Authentication.Abstractions.csproj" />
   </ItemGroup>
 
   <ItemGroup>

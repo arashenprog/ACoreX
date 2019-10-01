@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Authentication\ACoreX.Authentication.Abstraction\ACoreX.Authentication.Abstractions.csproj" />
+    <ProjectReference Include="..\..\Authentication\ACoreX.Authentication.Abstractions\ACoreX.Authentication.Abstractions.csproj" />
     <ProjectReference Include="..\..\Extensions\ACoreX.Extensions.Types\ACoreX.Extensions.Types.csproj" />
     <ProjectReference Include="..\..\Injector\ACoreX.Injector.Abstraction\ACoreX.Injector.Abstractions.csproj" />
   </ItemGroup>

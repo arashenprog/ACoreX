@@ -4,20 +4,20 @@ using System.Data;
 
 namespace ACoreX.Data.Abstractions
 {
-    public abstract class DBParam : IDBParam
+    public class DBParam
     {
-        public abstract DbType DbType { get; set; }
-   
+        public DbType DbType { get; set; }
+
         [DefaultValue(ParameterDirection.Input)]
-        public abstract ParameterDirection Direction { get; set; }
-      
-        public abstract bool IsNullable { get; set; }
-    
+        public ParameterDirection Direction { get; set; }
+
+        public bool IsNullable { get; set; }
+
         [DefaultValue("")]
-        public abstract string Name { get; set; }
+        public string Name { get; set; }
 
         [DefaultValue(null)]
-        public abstract object Value { get; set; }
-        
+        public object Value { get; set; }
+
     }
 }

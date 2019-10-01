@@ -9,12 +9,24 @@ namespace ACoreX.Data.Dapper
 {
     public class DapperData : IData
     {
+
+        public IDbConnection _connection;
         public IDbConnection Connection
         {
             get
             {
-                return new SqlConnection("Server=192.168.105.55\\exp17;Database=CRM; User Id = ma; Password = 123;");
+                return _connection;
             }
+        }
+
+        public DapperData(string connectionString)
+        {
+            _connection = new SqlConnection(connectionString);
+        }
+
+        public DapperData(IDbConnection connection)
+        {
+            _connection = connection;
         }
 
         //public void Execute(string sQuery, DynamicParameters parameters)
@@ -61,11 +73,14 @@ namespace ACoreX.Data.Dapper
         //    }
         //}
 
-        public IEnumerable<dynamic> Query(string sQuery, params DBParam[] parameters)
+        public IEnumerable<T> Query<T>(string sQuery, params DBParam[] parameters)
         {
             using (IDbConnection connection = Connection)
             {
-                IEnumerable<dynamic> result = connection.Query(sQuery, parameters);
+                var dbArgs = new DynamicParameters();
+                foreach (var pair in parameters) dbArgs.Add(pair.Name, pair.Value);
+                //
+                IEnumerable<T> result = connection.Query<T>(sQuery, dbArgs);
                 return result.AsList();
             }
         }
@@ -80,11 +95,11 @@ namespace ACoreX.Data.Dapper
         //    }
         //}
 
-        public Task<IEnumerable<dynamic>> QueryAsync(string sQuery, params DBParam[] parameters)
+        public Task<IEnumerable<T>> QueryAsync<T>(string sQuery, params DBParam[] parameters)
         {
             using (IDbConnection connection = Connection)
             {
-                Task<IEnumerable<dynamic>> result = connection.QueryAsync(sQuery, parameters);
+                Task<IEnumerable<T>> result = connection.QueryAsync<T>(sQuery, parameters);
                 return result;
             }
         }

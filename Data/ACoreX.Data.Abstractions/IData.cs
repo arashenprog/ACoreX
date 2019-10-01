@@ -8,10 +8,12 @@ namespace ACoreX.Data.Abstractions
 {
     public interface IData 
     {
-        IEnumerable<dynamic> Query(string sQuery, params DBParam[] parameters);
-        Task<IEnumerable<dynamic>> QueryAsync(string sQuery, params DBParam[] parameters);
+        IEnumerable<T> Query<T>(string sQuery, params DBParam[] parameters);
+        Task<IEnumerable<T>> QueryAsync<T>(string sQuery, params DBParam[] parameters);
         void Execute(string sQuery, params DBParam[] parameters);
         Task ExecuteAsync(string sQuery, params DBParam[] parameters);
+
+        IDbConnection Connection { get; }
 
     }
 }

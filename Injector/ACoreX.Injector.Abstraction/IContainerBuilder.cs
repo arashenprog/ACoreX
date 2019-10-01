@@ -12,12 +12,22 @@ namespace ACoreX.Injector.Abstractions
         void AddScope<TService, TImplementation>()
             where TService : class
             where TImplementation : class, TService;
+        void AddScope<TService, TImplementation>(TImplementation instance)
+           where TService : class
+           where TImplementation : class, TService;
 
         void AddSingleton<TService, TImplementation>()
             where TService : class
             where TImplementation : class, TService;
+        void AddSingleton<TService, TImplementation>(TImplementation instance)
+            where TService : class
+            where TImplementation : class, TService;
 
         void AddTransient<TService, TImplementation>()
+           where TService : class
+           where TImplementation : class, TService;
+
+        void AddTransient<TService, TImplementation>(TImplementation instance)
            where TService : class
            where TImplementation : class, TService;
 

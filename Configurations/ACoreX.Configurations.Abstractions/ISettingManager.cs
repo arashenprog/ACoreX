@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ACoreX.Configurations
+namespace ACoreX.Configurations.Abstractions
 {
     public interface ISettingManager
     {

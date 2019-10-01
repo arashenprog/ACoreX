@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.645
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACoreX", "ACoreX\ACoreX.csproj", "{0784A402-F1F6-4124-A0D6-977F0CBF047E}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Injector", "Injector", "{18E65B6D-75FD-49E0-984F-4677664FC919}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extensions", "Extensions", "{6BC1618E-5F0F-4D5A-A275-854E7D79E6E9}"
@@ -69,10 +67,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0784A402-F1F6-4124-A0D6-977F0CBF047E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0784A402-F1F6-4124-A0D6-977F0CBF047E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0784A402-F1F6-4124-A0D6-977F0CBF047E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0784A402-F1F6-4124-A0D6-977F0CBF047E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0E211AAB-19B8-4549-B99A-05C907DA5083}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0E211AAB-19B8-4549-B99A-05C907DA5083}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E211AAB-19B8-4549-B99A-05C907DA5083}.Release|Any CPU.ActiveCfg = Release|Any CPU

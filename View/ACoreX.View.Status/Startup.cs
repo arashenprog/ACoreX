@@ -37,7 +37,7 @@ namespace ACoreX.View.Status
             //.LoadPlugins(builder, "D:/app/lib/")
              .AddControllers();
             builder.AddSingleton<IAuthHandler, MyAuthClass>();
-            builder.AddSingleton<IData, DapperData>();
+            builder.AddScope<IData, DapperData>(new DapperData("Server=192.168.105.55\\exp17;Database=CRM; User Id = ma; Password = 123;"));
 
 
         }
@@ -53,6 +53,7 @@ namespace ACoreX.View.Status
             app.UseMvc();
         }
     }
+
     public class MyAuthClass : IAuthHandler
     {
 
@@ -69,19 +70,9 @@ namespace ACoreX.View.Status
             System.Security.Claims.ClaimsPrincipal checkTheToken = token.ValidateToken(token.Value);
             string userid = token.GetValue("Id");
 
-            _Idata.Query("select * from contacts");
+            _Idata.Query<Contact>("select * from contacts");
+            _Idata.Query<Contact>("select * from contacts");
             return checkToken;
         }
-    }
-    public class Contact
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Address { get; set; }
-        public string City { get; set; }
-        public string Subregion { get; set; }
-        public string PostalCode { get; set; }
-        public string Phone { get; set; }
-        public string Email { get; set; }
     }
 }

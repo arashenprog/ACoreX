@@ -2,7 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
+    <Description>fix connection problem</Description>
   </PropertyGroup>
 
   <ItemGroup>

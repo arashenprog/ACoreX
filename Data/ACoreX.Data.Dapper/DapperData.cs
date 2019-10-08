@@ -11,17 +11,15 @@ namespace ACoreX.Data.Dapper
     {
 
         public IDbConnection _connection;
-        public IDbConnection Connection
-        {
-            get
-            {
-                return _connection;
-            }
-        }
+        public IDbConnection Connection => _connection;
+
+
+        public string _connectionstring;
 
         public DapperData(string connectionString)
         {
             _connection = new SqlConnection(connectionString);
+            _connectionstring = connectionString;
         }
 
         public DapperData(IDbConnection connection)
@@ -72,19 +70,70 @@ namespace ACoreX.Data.Dapper
 
         //    }
         //}
-
+        private IDbConnection CreateConnection()
+        {
+            SqlConnection connection = new SqlConnection(_connectionstring);
+            // Properly initialize your connection here.
+            return connection;
+        }
         public IEnumerable<T> Query<T>(string sQuery, params DBParam[] parameters)
         {
-            using (IDbConnection connection = Connection)
-            {
-                var dbArgs = new DynamicParameters();
-                foreach (var pair in parameters) dbArgs.Add(pair.Name, pair.Value);
+            //using (var cn = CreateConnection())
+            //{
+            //    cn.Open();
+            //    using (var tran = cn.BeginTransaction())
+            //    {
+            //        try
+            //        {
+            //            // multiple operations involving cn and tran here
+            //            var dbArgs = new DynamicParameters();
+            //            foreach (var pair in parameters) dbArgs.Add(pair.Name, pair.Value);
+            //            var affectedRows = cn.Query<T>(sQuery, dbArgs);
+            //            tran.Commit();
+            //            return affectedRows.AsList();
+            //        }
+            //        catch
+            //        {
+            //            tran.Rollback();
+            //            throw;
+            //        }
+            //    }
+            //}
+            //using (var transaction = new TransactionScope())
+            //{
+            //    using (var connection = My.ConnectionFactory())
+            //    using (IDbConnection connection = Connection)
+            //    {
+            //        connection.Open();
+            //        var dbArgs = new DynamicParameters();
+            //        foreach (var pair in parameters) dbArgs.Add(pair.Name, pair.Value);
+            //        var result = connection.Query<T>(sQuery, dbArgs);
+            //        transaction.Complete();
+            //        return result.AsList();
+            //    }
+
+            //}
+            //using (IDbConnection connection = Connection)
+            //{
+                DynamicParameters dbArgs = new DynamicParameters();
+                foreach (DBParam pair in parameters)
+                {
+                    dbArgs.Add(pair.Name, pair.Value);
+                }
                 //
-                IEnumerable<T> result = connection.Query<T>(sQuery, dbArgs);
+                IEnumerable<T> result = Connection.Query<T>(sQuery, dbArgs);
+                Dispose();
                 return result.AsList();
+            //}
+        }
+        public void Dispose()
+        {
+            if (_connection != null && _connection.State == ConnectionState.Open)
+            {
+                _connection.Close();
+                _connection = null;
             }
         }
-
         //public Task<IEnumerable<dynamic>> QueryAsync(string sQuery, DynamicParameters parameters)
         //{
         //    using (IDbConnection connection = Connection)

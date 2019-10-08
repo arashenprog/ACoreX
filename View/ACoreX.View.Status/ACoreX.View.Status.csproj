@@ -15,6 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\acorex-backend\CRM.Module.Contracts\CRM.Module.Contracts.csproj" />
+    <ProjectReference Include="..\..\..\..\acorex-backend\CRM.Module\CRM.Module.csproj" />
     <ProjectReference Include="..\..\AssemblyLoader\ACoreX.AssemblyLoader\ACoreX.AssemblyLoader.csproj" />
     <ProjectReference Include="..\..\Authentication\ACoreX.Authentication.Abstractions\ACoreX.Authentication.Abstractions.csproj" />
     <ProjectReference Include="..\..\Authentication\ACoreX.Authentication.Core\ACoreX.Authentication.Core.csproj" />

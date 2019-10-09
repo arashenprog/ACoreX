@@ -70,8 +70,8 @@ namespace ACoreX.View.Status
             System.Security.Claims.ClaimsPrincipal checkTheToken = token.ValidateToken(token.Value);
             string userid = token.GetValue("Id");
 
-            _Idata.Query<Contact>("select * from contacts");
-            _Idata.Query<Contact>("select * from contacts");
+            //_Idata.Query<Contact>("select * from contacts");
+            //_Idata.Query<Contact>("select * from contacts");
             return checkToken;
         }
     }

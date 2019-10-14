@@ -32,7 +32,7 @@ namespace ACoreX.View.Status
              //.AddLogger<FileLogger>()
              //.AddLogger<MyCustomLogger>(false)
              .AddMvc()
-             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+             .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
              .LoadModules(builder, "D:/app/lib/")
             //.LoadPlugins(builder, "D:/app/lib/")
              .AddControllers();

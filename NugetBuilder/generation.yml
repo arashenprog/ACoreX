@@ -11,10 +11,14 @@ data:
     name: '{Database.Name}Context'
     baseClass: DbContext
     namespace: '{Project.Namespace}.Data'
-    directory: '{Project.Directory}\Data'
-  entity:
+    directory: '{Project.Directory}\Data'  
+  entity:    
+    name: '{Database.Name}Context'
     namespace: '{Project.Namespace}.Data.Entities'
     directory: '{Project.Directory}\Data\Entities'
+    entityNaming: 'Preserve'
+    relationshipNaming: 'Preserve'
+    prefixWithSchemaName: false
   mapping:
     namespace: '{Project.Namespace}.Data.Mapping'
     directory: '{Project.Directory}\Data\Mapping'

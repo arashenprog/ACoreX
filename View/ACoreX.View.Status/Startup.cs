@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace ACoreX.View.Status
 {
@@ -36,21 +37,28 @@ namespace ACoreX.View.Status
              .LoadModules(builder, "D:/app/lib/")
             //.LoadPlugins(builder, "D:/app/lib/")
              .AddControllers();
-            builder.AddSingleton<IAuthHandler, MyAuthClass>();
-            builder.AddScope<IData, DapperData>(new DapperData("Server=192.168.105.55\\exp17;Database=CRM; User Id = ma; Password = 123;"));
+            builder.AddScope<IData, DapperData>(new DapperData("Server=192.168.25.111;Database=CRM; Integrated Security = true;"));
 
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseMvc();
+            app.UseRouting();
+
+
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 

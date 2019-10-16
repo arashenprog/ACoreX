@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.Data.SqlClient;
 using System.Threading.Tasks;
 
 namespace ACoreX.Data.Abstractions
@@ -14,6 +15,8 @@ namespace ACoreX.Data.Abstractions
         Task ExecuteAsync(string sQuery, params DBParam[] parameters);
 
         IDbConnection Connection { get; }
+
+        SqlConnection OpenConnection();
 
     }
 }

@@ -10,22 +10,24 @@ namespace ACoreX.Data.Dapper
     public class DapperData : IData
     {
 
-        public IDbConnection _connection;
-        public IDbConnection Connection => _connection;
+        public SqlConnection _connection;
+        //public IDbConnection Connection => _connection;
 
 
         public string _connectionstring;
 
+        public IDbConnection Connection => throw new System.NotImplementedException();
+
         public DapperData(string connectionString)
         {
-            _connection = new SqlConnection(connectionString);
+           // _connection = new SqlConnection(connectionString);
             _connectionstring = connectionString;
         }
 
-        public DapperData(IDbConnection connection)
-        {
-            _connection = connection;
-        }
+        //public DapperData(IDbConnection connection)
+        //{
+        //    _connection = connection;
+        //}
 
         //public void Execute(string sQuery, DynamicParameters parameters)
         //{
@@ -35,13 +37,13 @@ namespace ACoreX.Data.Dapper
         //    }
         //}
 
-        public void Execute(string sQuery, params DBParam[] parameters)
-        {
-            using (IDbConnection connection = Connection)
-            {
-                IEnumerable<dynamic> result = connection.Query(sQuery, parameters);
-            }
-        }
+        //public void Execute(string sQuery, params DBParam[] parameters)
+        //{
+        //    using (IDbConnection connection = Connection)
+        //    {
+        //        IEnumerable<dynamic> result = connection.Query(sQuery, parameters);
+        //    }
+        //}
 
         //public Task ExecuteAsync(string sQuery, DynamicParameters parameters)
         //{
@@ -52,14 +54,14 @@ namespace ACoreX.Data.Dapper
         //    }
         //}
 
-        public Task ExecuteAsync(string sQuery, params DBParam[] parameters)
-        {
-            using (IDbConnection connection = Connection)
-            {
-                Task<IEnumerable<dynamic>> result = connection.QueryAsync(sQuery, parameters);
-                return Task.CompletedTask;
-            }
-        }
+        //public Task ExecuteAsync(string sQuery, params DBParam[] parameters)
+        //{
+        //    using (IDbConnection connection = Connection)
+        //    {
+        //        Task<IEnumerable<dynamic>> result = connection.QueryAsync(sQuery, parameters);
+        //        return Task.CompletedTask;
+        //    }
+        //}
 
         //public List<dynamic> Query(string sQuery, DynamicParameters parameters)
         //{
@@ -70,12 +72,12 @@ namespace ACoreX.Data.Dapper
 
         //    }
         //}
-        private IDbConnection CreateConnection()
-        {
-            SqlConnection connection = new SqlConnection(_connectionstring);
-            // Properly initialize your connection here.
-            return connection;
-        }
+        //public IDbConnection CreateConnection()
+        //{
+        //    SqlConnection connection = new SqlConnection(_connectionstring);
+        //    // Properly initialize your connection here.
+        //    return connection;
+        //}
         public IEnumerable<T> Query<T>(string sQuery, params DBParam[] parameters)
         {
             //using (var cn = CreateConnection())
@@ -113,7 +115,7 @@ namespace ACoreX.Data.Dapper
             //    }
 
             //}
-            //using (IDbConnection connection = Connection)
+            //using (SqlConnection cnn = this.OpenConnection())
             //{
                 DynamicParameters dbArgs = new DynamicParameters();
                 foreach (DBParam pair in parameters)
@@ -121,19 +123,42 @@ namespace ACoreX.Data.Dapper
                     dbArgs.Add(pair.Name, pair.Value);
                 }
                 //
-                IEnumerable<T> result = Connection.Query<T>(sQuery, dbArgs);
-                Dispose();
+                IEnumerable<T> result = _connection.Query<T>(sQuery, dbArgs);
+                //Dispose();
                 return result.AsList();
             //}
         }
-        public void Dispose()
+
+        public SqlConnection OpenConnection()
         {
-            if (_connection != null && _connection.State == ConnectionState.Open)
-            {
-                _connection.Close();
-                _connection = null;
-            }
+            string constr = _connectionstring;
+            _connection = new SqlConnection(constr);
+            _connection.Open();
+            return _connection;
         }
+
+        public Task<IEnumerable<T>> QueryAsync<T>(string sQuery, params DBParam[] parameters)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Execute(string sQuery, params DBParam[] parameters)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task ExecuteAsync(string sQuery, params DBParam[] parameters)
+        {
+            throw new System.NotImplementedException();
+        }
+        //public void Dispose()
+        //{
+        //    if (_connection != null && _connection.State == ConnectionState.Open)
+        //    {
+        //        _connection.Close();
+        //        _connection = null;
+        //    }
+        //}
         //public Task<IEnumerable<dynamic>> QueryAsync(string sQuery, DynamicParameters parameters)
         //{
         //    using (IDbConnection connection = Connection)
@@ -144,13 +169,13 @@ namespace ACoreX.Data.Dapper
         //    }
         //}
 
-        public Task<IEnumerable<T>> QueryAsync<T>(string sQuery, params DBParam[] parameters)
-        {
-            using (IDbConnection connection = Connection)
-            {
-                Task<IEnumerable<T>> result = connection.QueryAsync<T>(sQuery, parameters);
-                return result;
-            }
-        }
+        //public Task<IEnumerable<T>> QueryAsync<T>(string sQuery, params DBParam[] parameters)
+        //{
+        //    using (IDbConnection connection = Connection)
+        //    {
+        //        Task<IEnumerable<T>> result = connection.QueryAsync<T>(sQuery, parameters);
+        //        return result;
+        //    }
+        //}
     }
 }

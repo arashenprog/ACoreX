@@ -18,5 +18,7 @@ namespace ACoreX.Data.Abstractions
 
         SqlConnection OpenConnection();
 
+        void Dispose();
+
     }
 }

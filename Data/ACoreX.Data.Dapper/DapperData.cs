@@ -151,14 +151,19 @@ namespace ACoreX.Data.Dapper
         {
             throw new System.NotImplementedException();
         }
-        //public void Dispose()
-        //{
-        //    if (_connection != null && _connection.State == ConnectionState.Open)
-        //    {
-        //        _connection.Close();
-        //        _connection = null;
-        //    }
-        //}
+        public void Dispose()
+        {
+            if (_connection != null && _connection.State == ConnectionState.Open)
+            {
+                _connection.Close();
+                _connection = null;
+            }
+            if (_connection != null && _connection.State == ConnectionState.Connecting)
+            {
+                _connection.Close();
+                _connection = null;
+            }
+        }
         //public Task<IEnumerable<dynamic>> QueryAsync(string sQuery, DynamicParameters parameters)
         //{
         //    using (IDbConnection connection = Connection)

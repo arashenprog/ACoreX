@@ -28,7 +28,7 @@ namespace ACoreX.AssemblyLoader
                     location = new FileInfo(Assembly.GetEntryAssembly().Location).DirectoryName;
                 }
 
-                
+
                 IEnumerable<string> dlls = System.IO.Directory.EnumerateFiles(location).Where(f => f.Contains("Module.dll"));
 
                 foreach (string dll in dlls)
@@ -145,16 +145,27 @@ namespace ACoreX.AssemblyLoader
                             }
                             sb.AppendLine();
                             List<string> paramsList = new List<string>();
+
                             List<string> paramsValue = new List<string>();
+                            bool hasFile = false;
                             foreach (ParameterInfo p in a.GetParameters())
                             {
                                 //paramsList.Add(String.Format("[FromBody]{0} {1}",p.ParameterType.PrettyName(),p.Name));
+                                if(p.GetType() == typeof(byte))
+                                {
+                                    hasFile = true;
+                                }
                                 paramsList.Add(string.Format("{0} {1}{2}", p.ParameterType.GetFriendlyName(), p.Name,
                                     p.HasDefaultValue &&
                                     p.ParameterType.GetFriendlyName() == "string" ? "=" + @"""" + p.DefaultValue + @"""" : p.HasDefaultValue ? "=" + p.DefaultValue.ToString() : ""));
                                 paramsValue.Add(string.Format("{0}", p.Name));
                             }
-                            string paramsStr = string.Join(",", paramsList);
+                            string paramsStr = "";
+                            if (hasFile)
+                            {
+                                paramsStr = "[FromFile] ";
+                            }
+                            paramsStr = string.Join(",", paramsList);
                             string valueStr = string.Join(",", paramsValue);
 
                             sb.AppendFormat("public {3} {1} {0}({2}){{",
@@ -163,8 +174,8 @@ namespace ACoreX.AssemblyLoader
                                 paramsStr,
                                 a.ReturnType.BaseType == typeof(Task) ? "async" : "");
                             sb.AppendFormat("{0} {3} context.{1}({2});",
-                                a.ReturnType != typeof(void) ? "return" : "", 
-                                a.Name, 
+                                a.ReturnType != typeof(void) ? "return" : "",
+                                a.Name,
                                 valueStr,
                                 a.ReturnType.BaseType == typeof(Task) ? "await" : "");
                             sb.AppendLine("}");

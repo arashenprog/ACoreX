@@ -13,6 +13,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ACoreX.AssemblyLoader
@@ -144,28 +145,45 @@ namespace ACoreX.AssemblyLoader
                                     break;
                             }
                             sb.AppendLine();
+                            var routeAttributes = Regex.Matches(attr.Route, @"\{(.*?)\}");
                             List<string> paramsList = new List<string>();
 
                             List<string> paramsValue = new List<string>();
                             bool hasFile = false;
+                            bool isRoute = false;
                             foreach (ParameterInfo p in a.GetParameters())
                             {
                                 //paramsList.Add(String.Format("[FromBody]{0} {1}",p.ParameterType.PrettyName(),p.Name));
-                                if(p.GetType() == typeof(byte))
+                                foreach (var item in p.ParameterType.GetRuntimeFields())
                                 {
-                                    hasFile = true;
+                                    if (item.FieldType.Name == "Byte[]")
+                                    {
+                                        hasFile = true;
+                                    }
                                 }
-                                paramsList.Add(string.Format("{0} {1}{2}", p.ParameterType.GetFriendlyName(), p.Name,
-                                    p.HasDefaultValue &&
-                                    p.ParameterType.GetFriendlyName() == "string" ? "=" + @"""" + p.DefaultValue + @"""" : p.HasDefaultValue ? "=" + p.DefaultValue.ToString() : ""));
+                                foreach (var item in routeAttributes)
+                                {
+                                    if (item.ToString().Replace("{", "").Replace("}", "") == p.Name)
+                                    {
+                                        isRoute = true;
+                                        paramsList.Add(string.Format("[FromRoute]{0} {1}{2}", p.ParameterType.GetFriendlyName(), p.Name,
+                                       p.HasDefaultValue &&
+                                       p.ParameterType.GetFriendlyName() == "string" ? "=" + @"""" + p.DefaultValue + @"""" : p.HasDefaultValue ? "=" + p.DefaultValue.ToString() : ""));
+                                    }
+                                }
+                                if (!isRoute)
+                                    paramsList.Add(string.Format("{0} {1}{2}", p.ParameterType.GetFriendlyName(), p.Name,
+                                        p.HasDefaultValue &&
+                                        p.ParameterType.GetFriendlyName() == "string" ? "=" + @"""" + p.DefaultValue + @"""" : p.HasDefaultValue ? "=" + p.DefaultValue.ToString() : ""));
                                 paramsValue.Add(string.Format("{0}", p.Name));
+                                isRoute = false;
                             }
                             string paramsStr = "";
                             if (hasFile)
                             {
-                                paramsStr = "[FromFile] ";
+                                paramsStr = "[FromForm] ";
                             }
-                            paramsStr = string.Join(",", paramsList);
+                            paramsStr += string.Join(",", paramsList);
                             string valueStr = string.Join(",", paramsValue);
 
                             sb.AppendFormat("public {3} {1} {0}({2}){{",

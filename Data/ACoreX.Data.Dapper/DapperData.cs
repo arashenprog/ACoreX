@@ -20,7 +20,7 @@ namespace ACoreX.Data.Dapper
 
         public DapperData(string connectionString)
         {
-           // _connection = new SqlConnection(connectionString);
+            // _connection = new SqlConnection(connectionString);
             _connectionstring = connectionString;
         }
 
@@ -80,43 +80,8 @@ namespace ACoreX.Data.Dapper
         //}
         public IEnumerable<T> Query<T>(string sQuery, params DBParam[] parameters)
         {
-            //using (var cn = CreateConnection())
-            //{
-            //    cn.Open();
-            //    using (var tran = cn.BeginTransaction())
-            //    {
-            //        try
-            //        {
-            //            // multiple operations involving cn and tran here
-            //            var dbArgs = new DynamicParameters();
-            //            foreach (var pair in parameters) dbArgs.Add(pair.Name, pair.Value);
-            //            var affectedRows = cn.Query<T>(sQuery, dbArgs);
-            //            tran.Commit();
-            //            return affectedRows.AsList();
-            //        }
-            //        catch
-            //        {
-            //            tran.Rollback();
-            //            throw;
-            //        }
-            //    }
-            //}
-            //using (var transaction = new TransactionScope())
-            //{
-            //    using (var connection = My.ConnectionFactory())
-            //    using (IDbConnection connection = Connection)
-            //    {
-            //        connection.Open();
-            //        var dbArgs = new DynamicParameters();
-            //        foreach (var pair in parameters) dbArgs.Add(pair.Name, pair.Value);
-            //        var result = connection.Query<T>(sQuery, dbArgs);
-            //        transaction.Complete();
-            //        return result.AsList();
-            //    }
-
-            //}
-            //using (SqlConnection cnn = this.OpenConnection())
-            //{
+            try
+            {
                 DynamicParameters dbArgs = new DynamicParameters();
                 foreach (DBParam pair in parameters)
                 {
@@ -124,9 +89,46 @@ namespace ACoreX.Data.Dapper
                 }
                 //
                 IEnumerable<T> result = _connection.Query<T>(sQuery, dbArgs);
-                //Dispose();
                 return result.AsList();
-            //}
+            }
+            catch (System.Exception ex)
+            {
+
+                throw ex;
+            }
+
+
+        }
+
+        public dynamic Query(string sQuery, params DBParam[] parameters)
+        {
+            try
+            {
+                if (parameters.Length > 0)
+                {
+                    DynamicParameters dbArgs = new DynamicParameters();
+                    foreach (DBParam pair in parameters)
+                    {
+                        dbArgs.Add(pair.Name, pair.Value);
+                    }
+                    //
+                    var result = _connection.Query(sQuery, dbArgs);
+                    return result.AsList();
+                }
+                else
+                {
+                    var result = _connection.Query(sQuery, commandType: CommandType.Text);
+                    return result.AsList();
+                }
+            }
+            catch (System.Exception ex)
+            {
+
+                throw ex;
+            }
+
+
+
         }
 
         public SqlConnection OpenConnection()
@@ -142,9 +144,27 @@ namespace ACoreX.Data.Dapper
             throw new System.NotImplementedException();
         }
 
-        public void Execute(string sQuery, params DBParam[] parameters)
+        public dynamic Execute(string sQuery, CommandType commandType = CommandType.Text, params DBParam[] parameters)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                DynamicParameters dbArgs = new DynamicParameters();
+                foreach (DBParam pair in parameters)
+                {
+                    dbArgs.Add(pair.Name, pair.Value);
+                }
+                //
+                var result = _connection.Execute(sQuery, dbArgs, commandType: commandType);
+
+                return result;
+
+            }
+            catch (System.Exception ex)
+            {
+
+                throw ex;
+            }
+
         }
 
         public Task ExecuteAsync(string sQuery, params DBParam[] parameters)

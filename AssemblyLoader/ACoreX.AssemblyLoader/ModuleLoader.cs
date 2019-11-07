@@ -8,6 +8,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -204,6 +205,7 @@ namespace ACoreX.AssemblyLoader
                         sb.AppendLine("}");
                     }
                     sb.AppendLine("}");
+                    Debug.WriteLine(sb.ToString());
                     SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(sb.ToString());
                     string assemblyName = $"{moduleName}.Controllers";
                     List<MetadataReference> references = new List<MetadataReference>();
@@ -233,6 +235,7 @@ namespace ACoreX.AssemblyLoader
                             foreach (Diagnostic diagnostic in failures)
                             {
                                 Console.Error.WriteLine("{0}: {1}", diagnostic.Id, diagnostic.GetMessage());
+                                throw new Exception(string.Format("{0}: {1}", diagnostic.Id, diagnostic.GetMessage()));
                             }
                         }
                         else

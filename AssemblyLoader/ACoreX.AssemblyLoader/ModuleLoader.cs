@@ -1,6 +1,7 @@
 ﻿using ACoreX.Extensions.Types;
 using ACoreX.Injector.Abstractions;
 using ACoreX.WebAPI;
+using ACoreX.WebAPI.Abstractions;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.CodeAnalysis;
@@ -36,7 +37,7 @@ namespace ACoreX.AssemblyLoader
                 foreach (string dll in dlls)
                 {
                     bool flag = false;
-                    Assembly assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(dll);
+                    Assembly assembly = ACoreX.Injector.Core.AssemblyLoader.LoadFromAssemblyPath(dll);
                     IEnumerable<System.Reflection.TypeInfo> modules = assembly
                         .DefinedTypes
                         .Where(type => type.ImplementedInterfaces.Contains(typeof(IModule)));
@@ -74,7 +75,13 @@ namespace ACoreX.AssemblyLoader
 
                 IEnumerable<Assembly> all = AppDomain.CurrentDomain.GetAssemblies().Where(c => !c.FullName.Contains("DynamicMethods"));
                 IEnumerable<Assembly> allSdk = all;
-                IEnumerable<Assembly> modulesAssemblies = all.Where(c => c.FullName.Contains(".Module") && !c.FullName.Contains("Contract"));
+                IEnumerable<Assembly> modulesAssemblies = all.Where(c => 
+                        c.FullName.Contains(".Module") &&
+                        !(
+                            c.FullName.Contains("Contract") ||
+                            c.FullName.Contains("Abstractions")
+                        )
+                );
 
 
                 foreach (Assembly module in modulesAssemblies)

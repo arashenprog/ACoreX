@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AssemblyLoader\ACoreX.AssemblyLoader\ACoreX.AssemblyLoader.csproj" />
+    <ProjectReference Include="..\Authentication\ACoreX.Authentication.Core\ACoreX.Authentication.Core.csproj" />
+    <ProjectReference Include="..\Authentication\ACoreX.Authentication.JWT\ACoreX.Authentication.JWT.csproj" />
+    <ProjectReference Include="..\Data\ACoreX.Data.Abstractions\ACoreX.Data.Abstractions.csproj" />
+    <ProjectReference Include="..\Data\ACoreX.Data.Dapper\ACoreX.Data.Dapper.csproj" />
+    <ProjectReference Include="..\Injector\ACoreX.Injector.Abstraction\ACoreX.Injector.Abstractions.csproj" />
+    <ProjectReference Include="..\Injector\ACoreX.Injector.Core\ACoreX.Injector.Core.csproj" />
+    <ProjectReference Include="..\Injector\ACoreX.Injector.NetCore\ACoreX.Injector.NetCore.csproj" />
+  </ItemGroup>
+
+</Project>

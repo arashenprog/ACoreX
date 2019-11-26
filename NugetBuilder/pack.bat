@@ -11,6 +11,9 @@ nuget pack ..\Extensions\ACoreX.Extensions.Types\ACoreX.Extensions.Types.csproj
 nuget pack ..\Extensions\ACoreX.Plugin\ACoreX.Plugin.csproj
 nuget pack ..\Injector\ACoreX.Injector.Abstraction\ACoreX.Injector.Abstractions.csproj
 nuget pack ..\Injector\ACoreX.Injector.Core\ACoreX.Injector.Core.csproj
+nuget pack ..\Injector\ACoreX.Injector.NetCore\ACoreX.Injector.NetCore.csproj
+
 nuget pack ..\WebAPI\ACoreX.WebAPI\ACoreX.WebAPI.csproj
+nuget pack ..\WebAPI\ACoreX.WebAPI.Abstractions\ACoreX.WebAPI.Abstractions.csproj
 xcopy /y *.nupkg  \\192.168.105.55\LocalNuget
 efg generate

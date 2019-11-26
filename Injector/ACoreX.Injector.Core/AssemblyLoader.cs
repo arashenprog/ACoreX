@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,16 +11,18 @@ namespace ACoreX.Injector.Core
     {
         public static Assembly LoadFromAssemblyPath(string assemblyFullPath)
         {
-            string fileNameWithOutExtension = Path.GetFileNameWithoutExtension(assemblyFullPath);
+            //string fileNameWithOutExtension = Path.GetFileNameWithoutExtension(assemblyFullPath);
             string fileName = Path.GetFileName(assemblyFullPath);
             string directory = Path.GetDirectoryName(assemblyFullPath);
 
-            bool inCompileLibraries = DependencyContext.Default.CompileLibraries.Any(l => l.Name.Equals(fileNameWithOutExtension, StringComparison.OrdinalIgnoreCase));
-            bool inRuntimeLibraries = DependencyContext.Default.RuntimeLibraries.Any(l => l.Name.Equals(fileNameWithOutExtension, StringComparison.OrdinalIgnoreCase));
+            //bool inCompileLibraries = DependencyContext.Default.CompileLibraries.Any(l => l.Name.Equals(fileNameWithOutExtension, StringComparison.OrdinalIgnoreCase));
+            //bool inRuntimeLibraries = DependencyContext.Default.RuntimeLibraries.Any(l => l.Name.Equals(fileNameWithOutExtension, StringComparison.OrdinalIgnoreCase));
 
-            Assembly assembly = (inCompileLibraries || inRuntimeLibraries)
-                ? Assembly.Load(new AssemblyName(fileNameWithOutExtension))
-                : AssemblyLoadContext.Default.LoadFromAssemblyPath(assemblyFullPath);
+            //Assembly assembly = (inCompileLibraries || inRuntimeLibraries)
+            //    ? Assembly.Load(new AssemblyName(fileNameWithOutExtension))
+            //    : AssemblyLoadContext.Default.LoadFromAssemblyPath(assemblyFullPath);
+
+            Assembly assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(assemblyFullPath);
 
             if (assembly != null)
             {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ACoreX.WebAPI
+namespace ACoreX.WebAPI.Abstractions
 {
     public enum WebApiMethod
     {

@@ -96,8 +96,6 @@ namespace ACoreX.Data.Dapper
 
                 throw ex;
             }
-
-
         }
 
         public dynamic Query(string sQuery, params DBParam[] parameters)

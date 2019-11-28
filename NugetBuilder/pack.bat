@@ -2,7 +2,10 @@ nuget pack ..\AssemblyLoader\ACoreX.AssemblyLoader\ACoreX.AssemblyLoader.csproj
 nuget pack ..\Authentication\ACoreX.Authentication.Abstractions\ACoreX.Authentication.Abstractions.csproj
 nuget pack ..\Authentication\ACoreX.Authentication.Core\ACoreX.Authentication.Core.csproj
 nuget pack ..\Authentication\ACoreX.Authentication.JWT\ACoreX.Authentication.JWT.csproj
+
 nuget pack ..\Configurations\ACoreX.Configurations.Abstractions\ACoreX.Configurations.Abstractions.csproj
+nuget pack ..\Configurations\ACoreX.Configurations.NetCore\ACoreX.Configurations.NetCore.csproj
+
 nuget pack ..\Data\ACoreX.Data.Abstractions\ACoreX.Data.Abstractions.csproj
 nuget pack ..\Data\ACoreX.Data.Dapper\ACoreX.Data.Dapper.csproj
 nuget pack ..\Data\ACoreX.Data.EFCore\ACoreX.Data.EFCore.csproj

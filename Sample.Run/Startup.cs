@@ -19,6 +19,7 @@ using ACoreX.Data.Abstractions;
 using ACoreX.Data.Dapper;
 using Microsoft.AspNetCore.Http;
 using ACoreX.Injector.NetCore;
+using ACoreX.WebAPI;
 
 namespace Sample.Run
 {
@@ -39,9 +40,10 @@ namespace Sample.Run
         {
             string libPath = Configuration["Moduels:Path"];
             IContainerBuilder builder = services.AddBuilder(new NetCoreContainerBuilder(services));
-            builder.AddTransient<IData, DapperData>(new DapperData(Configuration["ConnectionString:SQLConnection"]));
-            services
-           .AddAuthenticationInstance<JWTAuthService>()
+            builder.AddSingleton<ACoreX.Configurations.Abstractions.IConfiguration, ACoreX.Configurations.NetCore.NetCoreConfiguration>();
+            //builder.AddTransient<IData, DapperData>(new DapperData(Configuration["ConnectionString:SQLConnection"]));
+            _ = services
+           //.AddAuthenticationInstance<JWTAuthService>()
            .AddCors(options =>
            {
                options.AddPolicy(MyAllowSpecificOrigins,
@@ -53,10 +55,11 @@ namespace Sample.Run
                });
            })
            .AddMvc()
-           //.AddNewtonsoftJson()
+//           .AddNewtonsoftJson()
            .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
            .LoadModules(builder, libPath)
-           .AddControllers();
+           .AddControllers()
+           ;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -68,6 +71,8 @@ namespace Sample.Run
             }
 
             app.UseRouting();
+
+            app.UseAPIResponseWrapperMiddleware();
 
             app.UseEndpoints(endpoints =>
             {

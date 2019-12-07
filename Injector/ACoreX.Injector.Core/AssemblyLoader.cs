@@ -39,19 +39,34 @@ namespace ACoreX.Injector.Core
 
             foreach (AssemblyName reference in references)
             {
-                if (filesInDirectory.Contains(reference.Name))
+
+                if (filesInDirectory.Contains(reference.Name)   )
                 {
                     string loadFileName = reference.Name + ".dll";
                     string path = Path.Combine(directory, loadFileName);
-                    Assembly loadedAssembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(path);
-                    if (loadedAssembly != null)
+                    Assembly loadedAssembly = null;
+                    try
                     {
-                        LoadReferencedAssemblies(loadedAssembly, loadFileName, directory);
+                        loadedAssembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(path);
+                    }
+                    catch (Exception)
+                    {
+                        loadedAssembly = Assembly.LoadFile(path);
+                    }
+                    finally
+                    {
+                        if (loadedAssembly != null)
+                        {
+                            LoadReferencedAssemblies(loadedAssembly, loadFileName, directory);
+                        }
                     }
                 }
             }
 
         }
+
+
+
 
     }
 }

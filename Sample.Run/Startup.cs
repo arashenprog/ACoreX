@@ -55,7 +55,7 @@ namespace Sample.Run
                });
            })
            .AddMvc()
-           .AddNewtonsoftJson()
+           //.AddNewtonsoftJson()
            .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
            .LoadModules(builder, libPath)
            .AddControllers()

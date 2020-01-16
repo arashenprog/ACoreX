@@ -167,7 +167,7 @@ namespace ACoreX.WebAPI
                 {
                     jsonString = JsonConvert.SerializeObject(ApiResponse);
                 }
-                else if (ApiResponse.Result != null)
+                else if (ApiResponse.Items != null)
                 {
                     jsonString = JsonConvert.SerializeObject(ApiResponse);
                 }

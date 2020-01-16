@@ -1,7 +1,6 @@
 ﻿
 using ACoreX.Configurations.Abstractions;
 using ACoreX.Data.Abstractions;
-using ACoreX.WebAPI;
 using ACoreX.WebAPI.Abstractions;
 using CRM.Contracts.Module;
 using CRM.Contracts.Module.Models;
@@ -51,11 +50,17 @@ namespace CRM.Module.Contexts
                     var tes = conn.ExecuteReader(sql:"select * FROM [CRM].[ADM].[ADM_VW_IMPORT]", commandType: System.Data.CommandType.Text);
 
 
+                    var sql = "SELECT *,overall_count = COUNT(*) OVER()  FROM (SELECT [ETIM_ID] AS [EntityImportID],[ETIM_NAME] AS [EntityImportName],[ETFD_NAME] AS [EntityFieldName],[ENTT_NAME] AS [EntityName],[ENTT_SOURCE] AS [EntitySource],[EIFD_EXCEL_COL_NAME] AS [EntityImportFieldExcelColName],[EIFD_FGNK] AS [IsForeginKey],[EIFD_COLM_IND] AS [ColumnIndex],[ETIM_SPBASE] AS [SPName] FROM ADM.ADM_VW_IMPORT) T";
 
-                    var tes1 = conn.Query<dynamic>("select * from ADM.ADM_USERS");
-                    
+                    var tes1 = conn.Query<dynamic>(sql);
+
+                    var res = new
+                    {
+                        Items = tes1,
+                        TotalCount = 32
+                    };
                     conn.Dispose();
-                    return tes1;
+                    return res;
                 }
                 catch (Exception ex)
                 {
